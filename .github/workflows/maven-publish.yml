@@ -34,6 +34,18 @@ jobs:
             server-username: CENTRAL_TOKEN_USERNAME
             server-password: CENTRAL_TOKEN_PASSWORD
 
+        - name: Resolve dependencies
+          run: mvn dependency:resolve
+
+        - name: Seal Security Fix
+          uses: seal-community/cli-action@latest
+          with:
+            mode: fix
+            fix_mode: remote
+            token: ${{ secrets.SEAL_TOKEN }}
+            project: lz4-java-5425
+            target: pom.xml
+
         - name: mvn install
           run: mvn install
 
